@@ -1,10 +1,8 @@
 package com.example.marvel_characters.repository
 
 import com.example.marvel_characters.database.CharactersLocalDataSource
-import com.example.marvel_characters.domain.MarvelCharacter
+import com.example.marvel_characters.domain.Character
 import com.example.marvel_characters.network.CharactersRemoteDataSource
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 class Repository private constructor(
     private val charactersLocalDataSource: CharactersLocalDataSource,
@@ -27,32 +25,20 @@ class Repository private constructor(
         }
     }
 
-
     fun observeSavedCharactersList() = charactersLocalDataSource.observeCharactersList()
     fun observeSavedCharacter(id: String) = charactersLocalDataSource.observeCharacter(id)
+    suspend fun getSavedCharacter(id: String) = charactersLocalDataSource.getCharacter(id)
+    suspend fun getSavedCharacterList() = charactersLocalDataSource.getSavedCharacters()
+    suspend fun saveCharacter(character: Character) =
+        charactersLocalDataSource.saveCharacter(character)
 
-    suspend fun getSavedCharacter(id: String) =
-        charactersLocalDataSource.getCharacter(id)
-    suspend fun getSavedCharacterList() =
-        charactersLocalDataSource.getSavedCharacters()
-
-    suspend fun saveCharacter(character: MarvelCharacter) {
-        coroutineScope {
-            launch { charactersLocalDataSource.saveCharacter(character) }
-        }
-    }
-
-    suspend fun deleteCharacter(character: MarvelCharacter) {
-        coroutineScope {
-            launch { charactersLocalDataSource.deleteCharacterById(character.id) }
-        }
-    }
-
+    suspend fun deleteCharacter(character: Character) =
+        charactersLocalDataSource.deleteCharacterById(character.id)
 
     suspend fun getNextPage() = characterRemoteDataSource.getNextCharacterPage()
-
     suspend fun getCharacterByIdFromWeb(id: String) = characterRemoteDataSource.getCharacterById(id)
     fun hasNextPage() = characterRemoteDataSource.hasNextPage()
-
+    suspend fun updateCharacter(character: Character) =
+        charactersLocalDataSource.updateCharacter(character)
 
 }

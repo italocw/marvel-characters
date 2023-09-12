@@ -1,29 +1,27 @@
 package com.example.marvel_characters.network
 
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Test
 
-class CharactersResultDataInfoTest
-{
+class CharactersResultDataInfoTest {
     @Test
-    fun shouldReturnHasNextTrue()
-    {
-        val charactersResultDataInfo = CharactersResultDataInfo(0, 20,21)
-        Assert.assertTrue(charactersResultDataInfo.hasNextPage())
-    }
-    @Test
-    fun shouldReturnHasNextFalse()
-    {
-        val charactersResultDataInfo = CharactersResultDataInfo(0, 20,20)
-        Assert.assertFalse(charactersResultDataInfo.hasNextPage())
-
+    fun shouldReturnHasNextTrue() {
+        val charactersResultDataInfo = CharactersResultDataInfo(0, 20, 21)
+        assertThat(charactersResultDataInfo.hasNextPage(), `is`(true))
     }
 
     @Test
-    fun shouldReturnNextPageOffset()
-    {
-        val charactersResultDataInfo = CharactersResultDataInfo(0, 20,21)
-        Assert.assertEquals(20,charactersResultDataInfo.nextPageOffset())
+    fun shouldReturnHasNextFalse() {
+        val charactersResultDataInfo = CharactersResultDataInfo(0, 20, 20)
+        assertThat(charactersResultDataInfo.hasNextPage(), `is`(false))
+    }
+
+    @Test
+    fun shouldReturnNextPageOffset() {
+        val charactersResultDataInfo = CharactersResultDataInfo(0, 20, 21)
+        assertThat(charactersResultDataInfo.nextPageOffset(), `is`(20))
     }
 
 }

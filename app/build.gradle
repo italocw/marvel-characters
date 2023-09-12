@@ -33,7 +33,7 @@ android {
             buildConfigField("String", "PRIVATE_API_KEY", "\"" + localProperties['privateApiKey'] + "\"")
             buildConfigField("String", "HASH", "\"" + localProperties['hash'] + "\"")
 
-            //     resValue("string", "api_key", localProperties['apiKey'])
+            //    if need to generate something on res-> resValue("string", "api_key", localProperties['apiKey'])
         }
 
         release {
@@ -112,7 +112,12 @@ dependencies {
     implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
     implementation("io.insert-koin:koin-androidx-compose:$koin_version")
 
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.32.0"
     implementation "androidx.navigation:navigation-compose:2.7.2"
 
+    testImplementation "org.mockito:mockito-core:5.0.0"
+
     testImplementation "com.squareup.okhttp3:mockwebserver:4.9.0"
+
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
 }
